@@ -1,0 +1,83 @@
+{% extends 'layout.html' %}
+{% block title %}
+    Service of {{service.name}}
+{% endblock %}
+
+{% block content %}
+    <h1>Service of {{service.name}}</h1>
+    <div class = "heading">
+        <h2 class = "text-muted" style="text-align: left;">Service</h2>
+        <h3 class="text-muted">
+            <em>
+                Showing service of {{service.name}} only.
+            </em>
+        </h3>
+
+        <a class="btn btn-success" href="{{url_for('add_product', service_id = service.id)}}">
+            <i class="fas fa-plus fa-xs"></i>
+            Add <!-- change this add word can chage the position of + left or right-->
+        </a> 
+    </div>
+
+
+<table class = "table">
+    <thead>
+        <tr> 
+            <th>service_id</th>
+            <th>customer_id</th>
+            <th>professional_id</th>
+            <th>date_of_request</th>
+            <th>date_of_completion</th>
+            <th>status</th>
+            <th>remarks</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in service.requests %} <!-- here requests is the variable in service class where have realtion with servicerequest-->
+        <tr>
+            <td>{{product.service_id}}</td>
+            <td>{{product.customer_id}}</td>
+            <td>{{product.professional_id}}</td>
+            <td>{{product.date_of_request}}</td>
+            <td>{{product.date_of_completion}}</td>
+            <td>{{product.status}}</td>
+            <td>{{product.remarks}}</td>
+
+            <td>
+                <a class = "btn btn-outline-primary" href="{{url_for('edit_product',id = product.id)}}">
+                    <i class = "fas fa-edit fa-xs"></i>
+                    Edit
+                </a>
+
+                <a class = "btn btn-outline-danger" href="{{url_for('delete_product',id = product.id)}}">
+                    <i class="fas fa-trash fa-xs"></i>
+                    Delete
+                </a>   
+
+            </td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+
+
+{% endblock %}   
+
+
+
+{% block style %}
+<style>
+    .heading{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    h1,h2{
+        text-align: center;
+    }
+
+</style>
+{% endblock %}

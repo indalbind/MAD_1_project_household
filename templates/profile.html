@@ -1,0 +1,73 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Profile - Service
+{% endblock %}    
+
+
+{% block content %}
+    <h1>Profile
+        <small class="text-muted">@{{user.username}}</small>
+    </h1>
+
+    <hr> <!-- this create a horizontal line in page oo joo line haiii naa oo hiii -->
+    <h3>Edit Profile</h3>
+    <form method="post">
+
+        <label for = "username" class = "from-label"> New Username:
+            <input type="text" name = "username" id = "username" class = "form-control" required value = {{user.username}}>
+        </label>
+        
+        <label for = "cpassword" class = "form-label">Current Password:
+            <input type="password" name = "cpassword" id = "cpassword" class = "form-control" required >
+        </label>
+
+        <label for = "password" class = "form-label">Change Password:
+            <input type="password" name = "password" id = "password" class = "form-control" required>
+        </label>
+    
+        <label for="fullname" class = "form-label">Change FullName:
+            <input type="text" name = "fullname" id = "fullname" class = "form-control" value = {{user.fullname}}>
+        </label>
+    
+        <label for="email_id" class = "form-label"> Change Email_id:
+            <input type="text" name = "email_id" id = "email_id" class = "form-control" value = {{user.email_id}}>
+        </label>
+    
+        <label for="address" class = "form-label">Change Address:
+            <input type="address" name = "address" id = "address" class = "form-control" value = {{user.address}} >
+        </label>
+    
+        <label for="pincode" class = "form-label">Change Pincode:
+            <input type="text" name = "pincode" id = "pincode" class = "form-control" value = {{user.pincode}}>
+        </label>
+<!--     
+        <label for="role" class = "form-label">Change Role:
+            <input type="text" name = "role" id = "role" class = "form-control"value = {{user.role}} >
+        </label> -->
+        <input type="submit" value="Save Change" class = "btn btn-success">
+    </form>
+{% endblock %}
+
+
+{% block style %}
+<style>
+    body{
+            margin: 0;
+            padding: 0;
+            background-image: url('/static/images/adm_profile2.png'); /* Add background image */
+            background-size: cover; /* Ensure the image covers the entire background */
+            background-repeat: no-repeat; /* Prevent image repetition */
+            background-attachment: fixed;
+    }
+    form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    h3{
+        text-align: center;
+
+    }
+</style>
+{% endblock %}

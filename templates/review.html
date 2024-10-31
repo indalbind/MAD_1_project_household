@@ -1,0 +1,92 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Submit Review - CuraFix
+{% endblock %}
+
+{% block content %}
+<h2 style="text-align: center;">Submit Review for Service Request #{{request.id }}</h2>
+
+<table class = "table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Service_name</th>
+
+            <th>Assigned Professional</th>
+            <th>Professional_ID</th>
+            <th>Date of request</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{request.id}}</td> 
+            <td>{{request.service.name}}</td> 
+            <td>{{request.assigned_professional.fullname}}</td> 
+            <td>{{request.assigned_professional.id}}</td> 
+            <td>{{request.date_of_request}}</td>
+            
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+<form method="POST" action="{{ url_for('review') }}">
+    <input type="hidden" name="service_request_id" value="{{ request.id }}">
+
+    <div class="form-group">
+        <label for="rating">Rating (1-5):</label>
+        <input type="number" name="rating" id="rating" class="form-control" min="1" max="5" required>
+    </div>
+
+    <div class="form-group">
+        <label for="comment">Comment:</label>
+        <textarea name="comment" id="comment" class="form-control" rows="3" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-outline-success">
+        <i class="fas fa-check fa-xs"></i> Close</button>
+
+    <a class="btn btn-outline-danger" href="{{ url_for('index') }}" style="margin-left: 850px">
+            <i class="fas fa-close fa-xs"></i> cancel
+    </a>    
+</form>
+
+{% endblock %}
+
+{% block style %}
+<style>
+    body {
+        background-image: url('/static/images/home_page.jpg');
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box; 
+    }
+
+    form {
+        max-width: 6000px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 1px solid #28a745;
+        border-radius: 10px;
+        background-color: #f8f9fa;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        font-weight: bold;
+    }
+    table{
+            width: 100%;
+            /* border-collapse: separate;  user for make cell*/ 
+            border-radius: 10px; /* Add rounded corners */
+            overflow: hidden; /* Ensures the border-radius works */
+    }
+</style>
+{% endblock %}

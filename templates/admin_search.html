@@ -1,0 +1,117 @@
+{% extends 'layout.html' %}
+
+
+{% block title %}
+    admin Search
+{% endblock %}    
+
+
+{% block content %}
+<div class="container-fluid p-3">
+    <form method="GET">  <!-- Using GET method to send parameters in URL -->
+        <h3>Search by:</h3>
+        <select name="parameter" id="parameter" class="form-select text-success">
+            <option value="service_request" selected>Service Request</option>
+            <option value="user"selected>Customer</option>
+            <option value="professional" selected>Professional</option>
+            <option value="service" selected>Service</option>
+            <option value="review" selected>Review</option>
+        </select>
+
+        <input type="text" class="form-control text-success" id="query" name="query" placeholder="Search Query" value="{{ request.args.get('query', '') }}">
+
+        <button type="submit" class="btn btn-outline-primary">
+            <i class="fas fa-search"></i> Search
+        </button>
+    </form>
+</div>
+
+
+{% if results %}
+<div class="mt-5">
+    <h4>Search Results:</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                {% for header in headers %}
+                <th>{{ header }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in results %}
+            <tr>
+                {% for header in headers %}
+                <td>{{ result[header] }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>    
+{% endif %}
+
+{% endblock %}
+
+
+
+
+{% block style %}
+<style>
+
+    body{
+        margin: 0;
+        padding: 0;
+        background-image: url('/static/images/search4.png'); /* Add background image */
+        background-size: cover; /* Ensure the image covers the entire background */
+        background-repeat: no-repeat; /* Prevent image repetition */
+        background-attachment: fixed;
+}
+
+    form{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+        margin-top: 30px;
+    }
+    #parameter{
+        margin-left: 10px;
+        margin-right: 10px;
+        width: 20%;
+    }
+    #query{
+        margin-left: 10px;
+        margin-right: 10px;
+        width: 40%;
+    }
+
+    table {
+        width: 100%;
+        /* border-collapse: separate;  user for make cell*/ 
+        border-radius: 10px; /* Add rounded corners */
+        overflow: hidden; /* Ensures the border-radius works */
+    }
+</style>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,178 @@
+{% extends 'layout.html' %}
+{% block title %}
+    Professional Dashboard
+{% endblock %}
+
+{% block content %}
+    <h1 style="margin-top:20px;">Welcome, Professional {{professional.fullname}} !</h1>
+
+
+<!-- Pending Services -->
+<h2 style="text-align: left; margin-top:30px;">Today Services</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Customer name</th>
+            <th>Service</th>
+            <th>Customer address</th>
+            <th>Customer Pincode</th>
+            <th>Date of request</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for request in service_requests %}
+        <tr>
+            <td>{{ request.id }}</td>
+            <td>{{ request.requesting_customer.fullname }}</td>
+            <td>{{ request.service.name }}</td>
+            <td>{{ request.requesting_customer.address }}</td>
+            <td>{{ request.requesting_customer.pincode }}</td>
+            <td>{{ request.date_of_request }}</td>
+            <td>
+                <a class="btn btn-outline-success" href="{{ url_for('accept_service', id=request.id) }}">
+                    <i class="fas fa-check fa-xs"></i> Accept
+                </a>
+
+                <a class="btn btn-outline-danger" href="{{ url_for('reject_service', id=request.id) }}">
+                    <i class="fas fa-trash fa-xs"></i> Reject
+                </a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="7" style="text-align:center;">No pending services available</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- My Services -->
+<h2 style="text-align: left; margin-top:30px;">My Services</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Customer Name</th>
+            <th>Service Requested</th>
+            <th>Customer Address</th>
+            <th>Customer Pincode</th>
+            <th>Date of Request</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for request in my_services %}
+        <tr>
+            <td>{{ request.id }}</td>
+            <td>{{ request.requesting_customer.fullname }}</td>
+            <td>{{ request.service.name }}</td>
+            <td>{{ request.requesting_customer.address }}</td>
+            <td>{{ request.requesting_customer.pincode }}</td>
+            <td>{{ request.date_of_request }}</td>
+            <td>
+                <a class="btn btn-outline-danger" href="{{ url_for('drop_service', id=request.id) }}">
+                    <i class="fas fa-times fa-xs"></i> Drop
+                </a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="7" style="text-align:center;">No active services available</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Closed Services -->
+<h2 style="text-align: left; margin-top:30px;">Closed Services</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Customer Name</th>
+            <th>Service Requested</th>
+            <th>Customer Address</th>
+            <th>Customer Pincode</th>
+            <th>Date of Request</th>
+            <th>Closed_date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for request in closed_services %}
+        <tr>
+            <td>{{ request.id }}</td>
+            <td>{{ request.requesting_customer.fullname }}</td>
+            <td>{{ request.service.name }}</td>
+            <td>{{ request.requesting_customer.address }}</td>
+            <td>{{ request.requesting_customer.pincode }}</td>
+            <td>{{ request.date_of_request }}</td>
+            <td>{{ request.date_of_completion }}</td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="7" style="text-align:center;">No completed services available</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+
+
+{% endblock %}
+
+
+
+
+
+
+{% block style %}
+<style>
+    
+    body {
+        margin: 0;
+        padding: 0;
+        background-image: url('/static/images/prof_dash3.png'); /* Add background image */
+        background-size: cover; /* Ensure the image covers the entire background */
+        background-repeat: no-repeat; /* Prevent image repetition */
+        background-attachment: fixed;
+    }
+
+
+    .heading{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-top: -25px;
+    }
+
+    h1{
+        text-align: center;
+        color: aliceblue;
+        font-weight: bold;
+    }
+
+    h2{
+        text-align: center;
+        color: rgb(97, 179, 238);    
+    }
+
+
+    /* adding the border radius in table */
+    table {
+        width: 100%;
+        /* border-collapse: separate;  user for make cell*/ 
+        border-radius: 10px; /* Add rounded corners */
+        overflow: hidden; /* Ensures the border-radius works */
+    }
+    
+
+
+
+</style>
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Profile - Professional
+{% endblock %}    
+
+
+{% block content %}
+    <h1 style="display: inline;">Profile
+        <small class="text-muted">@{{professional.username}}</small>
+    </h1>
+    <button class="btn btn-outline-primary" style="margin-left: 600px;">
+        {% if professional.pdf_file %}
+        <a href="/{{ professional.pdf_file | replace('\\', '/') }}" target="_blank">View Resume</a>
+        {% else %}
+        No PDF available
+        {% endif %}
+    </button>
+    <hr> <!-- this create a horizontal line in page oo joo line haiii naa oo hiii -->
+    <h3>Edit Profile</h3>
+    <form method="post" enctype="multipart/form-data" class ="mt-5">
+
+        <label for = "username" class = "from-label"> New Username:
+            <input type="text" name = "username" id = "username" class = "form-control line-input" required value = {{professional.username}}>
+        </label>
+        <br>
+        
+        <label for = "cpassword" class = "form-label">Current Password:
+            <input type="password" name = "cpassword" id = "cpassword" class = "form-control line-input" required >
+        </label>
+        <br>
+
+        <label for = "password" class = "form-label">Change Password:
+            <input type="password" name = "password" id = "password" class = "form-control line-input" >
+        </label>
+        <br>
+    
+        <label for="fullname" class = "form-label">Change FullName:
+            <input type="text" name = "fullname" id = "fullname" class = "form-control line-input" value = {{professional.fullname}}>
+        </label>
+        <br>
+        
+        
+        <!-- pdf file -->
+        <label for="pdf_file" class="form-label ">
+            <span class="text-muted"> Upload your resume (PDF): </span>
+             <input type="file" name="pdf_file" id="pdf_file" class="form-control line-input" accept="application/pdf"  style="color: #4a90e2; border-color: #4a90e2">
+        </label>
+        <br>
+
+           
+
+    
+        <label for="address" class = "form-label">Change Address:
+            <input type="address" name = "address" id = "address" class = "form-control line-input" value = {{professional.address}} >
+        </label>
+        <br>
+    
+        <label for="pincode" class = "form-label">Change Pincode:
+            <input type="text" name = "pincode" id = "pincode" class = "form-control line-input" value = {{professional.pincode}}>
+        </label>
+        <br>
+
+        <input type="submit" value="Save Change" class = "btn btn-success">
+    </form>
+
+{% endblock %}
+
+
+{% block style %}
+<style>
+    body{
+            margin: 0;
+            padding: 0;
+            background-image: url('/static/images/adm_profile2.png'); /* Add background image */
+            background-size: cover; /* Ensure the image covers the entire background */
+            background-repeat: no-repeat; /* Prevent image repetition */
+            background-attachment: fixed;
+    }
+    form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    h3{
+        text-align: center;
+
+    }
+
+    .line-input {
+        border: none;
+        border-bottom: 1px solid #000; /* Black bottom border to create line */
+        outline: none; /* Remove the blue outline when input is focused */
+        width: 400px;
+        padding: 5px 0; /* Padding for spacing */
+        background-color: transparent;
+    }
+</style>
+{% endblock %}

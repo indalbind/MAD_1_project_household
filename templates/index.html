@@ -1,0 +1,181 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+CuraFix
+{% endblock %}
+
+{% block content %}
+
+
+<div class="Services">
+    <div class="service">
+
+        <div class="product">
+            <p>Household_Repair</p>
+            <a href="{{ url_for('index', service = 'repair') }}" 
+               class="btn btn-outline-success">Book</a>
+        </div>
+
+        <div class="product">
+            <p>Cleaning</p>
+            <a href="{{ url_for('index', service = 'cleaning') }}" 
+               class="btn btn-outline-success">Book</a>
+        </div>
+
+        <div class="product">
+            <p>Electronic</p>
+            <a href="{{ url_for('index', service = 'electronic') }}" 
+               class="btn btn-outline-success">Book</a>
+        </div>
+
+        <div class="product">
+            <p>Plumbing</p>
+            <a href="{{ url_for('index', service = 'plumbing') }}" 
+               class="btn btn-outline-success">Book</a>
+        </div>
+
+
+    </div>
+</div>
+
+<br>
+
+
+{% if show_service %}
+<h1>Services</h1>
+<table class = "table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Description</th>
+            <th>Service Name</th>
+            <th>Price</th>
+            <th>Book</th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for service in user_service_request %}
+        <tr>
+            <td>{{service.id}}</td> 
+            <td>{{service.description}}</td> 
+            <td>{{service.name}}</td>
+            <td>{{service.base_price}}₹</td>
+            <td>
+                <a href="{{url_for('ordering',service_id = service.id)}}" class="btn btn-outline-primary">
+                    Request
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+
+{% endif %}
+
+
+
+<h3>Service History</h3>
+<table class = "table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Assigned Professional</th>
+            <th>Service Name</th>
+            <th>Date of request</th>
+            <th>Status</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for request in service_request %}
+        <tr>
+            <td>{{request.id}}</td> 
+            <td>{{request.assigned_professional.fullname}}</td> 
+            <td>{{request.service.name}}</td>
+            <td>{{request.date_of_request}}</td>
+
+                {% if request.assigned_professional is none %}
+                        <td style="color: rgb(190, 184, 12);">Requested</td> 
+               {% else %}
+                    {% if request.status == "completed" %}
+                        <td style="color: rgb(35, 187, 38);">Closed</td>  
+                    {% else %}
+                        <td>
+                            <a class="btn btn-outline-success" href="{{ url_for('review', id=request.id) }}">
+                                <i class="fas fa-check fa-xs"></i> Close it?
+                            </a>
+                        </td>
+                {% endif %}
+            {% endif %}
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+
+
+
+{% endblock %}
+
+
+
+
+
+{% block style %}
+<style>
+    body {
+        background-image: url('/static/images/home_page.jpg');
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box; 
+    }
+
+    .Services {
+        width: 100%; 
+        max-width: 1200px;
+        margin: 50px auto; 
+        max-height: 400px;
+        border: 2px solid black;
+        border-radius: 10px;
+        padding: 20px;
+        overflow-y: auto;
+         
+    }
+
+    .service {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap; 
+        gap: 10px;
+    }
+
+    .product {
+        width: 160px;
+        height: 220px; 
+        margin: 5px;
+        border: 2px solid rebeccapurple;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column; 
+        justify-content: space-between; 
+        align-items: center; 
+        padding: 10px;
+        text-align: center;
+    }
+
+    .product p {
+        margin: 10px 0;
+    }
+
+    table {
+        width: 100%;
+        /* border-collapse: separate;  user for make cell*/ 
+        border-radius: 10px; /* Add rounded corners */
+        overflow: hidden; /* Ensures the border-radius works */
+    }
+    
+</style>
+{% endblock %}

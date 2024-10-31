@@ -1,0 +1,111 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Add Service
+{% endblock %}  
+
+{% block content %}
+    <h1>Add Service</h1>
+<div class="form-container">
+        <form method="post" class="form">
+            <br>
+            <!-- for service Name -->
+            <label for="name" class="form-label">
+                <input type="text" name = "name" id = "name" class="form-control line-input" placeholder="Service Name" required>
+            </label>
+            <br>
+
+            <!-- for Description -->
+            <label for="description" class="form-label">
+                <textarea name="description" id="description" class="form-control textarea-input line-input " placeholder="Description"  required style="height: 2px;"></textarea>
+            </label>
+            <br>
+
+            <!-- for Base Price -->
+            <label for="baseprice" class="form-label">
+                <input type="text" name = "baseprice" id = "baseprice" class="form-control line-input" placeholder="Base Price in ₹" required>
+            </label>
+
+            <br>
+            <br>
+
+            <div class="d-flex  align-items-center mt-5" style="width: 90%; margin: 40px; height: 10px" > 
+                <input type="submit" value="Save" class="btn btn-success" >
+
+                <a href="{{ url_for('admin') }}" class="btn btn-danger" style="text-decoration: none; margin-left: auto;">
+                    Cancel
+                </a>
+            </div>  
+        </form>
+</div>
+
+<img src="/static/images/add.png" alt="add_icon" height = "80" width = "80" class="add_icon">
+{% endblock %}    
+
+{% block style %}
+<style>
+    body{
+        background-color: rgb(172, 200, 216);
+        margin: 0;
+        padding: 0;
+        background-size: cover; /* Ensure the image covers the entire background */
+        background-repeat: no-repeat; /* Prevent image repetition */
+        height: 100vh;
+        background-attachment: fixed;
+    }
+    
+    h1{
+        margin-top: 90px;
+        text-align: center;
+        margin-bottom: 0%;
+    }
+
+     /* Center the form vertically and horizontally */    
+    .form-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh; /* Full viewport height */
+        margin: -110px;  /*negative margin use for adjest upward */
+        padding: 30px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 500px;
+        padding: 20px;
+        margin: 100px;
+        background-color: #f1f7f5;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .line-input {
+        border: none;
+        border-bottom: 1px solid #000; /* Black bottom border to create line */
+        outline: none; /* Remove the blue outline when input is focused */
+        width: 400px;
+        padding: 5px 0; /* Padding for spacing */
+        background-color: transparent;
+    }
+
+    .add_icon{
+        position: absolute;
+        top: 112px; /* Adjust as needed */
+        right: 415px; /* Adjust as needed */
+        z-index: 999; /* Ensure it's on top */
+        background-attachment: fixed;
+    }
+
+
+
+
+
+</style>
+{% endblock %}
+
+
+
+

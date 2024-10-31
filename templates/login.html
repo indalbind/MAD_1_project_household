@@ -1,0 +1,90 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Login 
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <form method ="post" class="mt-5">
+        <h2>Sign in</h2>
+        <div class="mb-5">
+            <label for="username" class="form-label"></label>
+            <input type="text" class="form-control line-input" id="username" name="username" placeholder="Enter your username">
+        </div>
+
+        <div class="mb-5">
+            <label for="password" class="form-label"></label>
+            <input type="password" class="form-control line-input" id="password" name="password" placeholder="Enter your password">
+        </div>
+        <br>
+
+        <br>
+        <div class="d-flex  align-items-center mb-5" style="width: 90%;">
+            <button type="submit" class="btn btn-success">login</button>
+            <div  class="forgot-password" style="text-decoration: none; margin-left: auto; color:rgb(27, 122, 79)">I have solution</div>
+        </div>
+
+        <br>
+        <p class="text-center">Don’t have an account? <a href="{{ url_for('register') }}" style="text-decoration: none; ">signup</a></p>
+    </form>
+</div>
+
+
+<img src="/static/images/service.png" alt="Service_icon" height = "100" width = "100" class="service_icon">
+
+{% endblock %}
+
+
+{% block style %}
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-image: url('/static/images/home_page.jpg'); /* Add background image */
+        background-size: cover; /* Ensure the image covers the entire background */
+        background-repeat: no-repeat; /* Prevent image repetition */
+        height: 100vh;
+        background-attachment: fixed;
+    }
+
+    /* Center the form vertically and horizontally */
+    .form-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh; /* Full viewport height */
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 500px;
+        height: 550px;
+        padding: 20px;
+        background-color: #f1f7f5;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .line-input {
+        border: none;
+        border-bottom: 1px solid #000; /* Black bottom border to create line */
+        outline: none; /* Remove the blue outline when input is focused */
+        width: 400px;
+        padding: 5px 0; /* Padding for spacing */
+        background-color: transparent;
+    }
+
+    .service_icon{
+        position: absolute;
+        top: 273px; /* Adjust as needed */
+        right: 216px; /* Adjust as needed */
+        z-index: 999; /* Ensure it's on top */
+        transform: rotate(30deg);
+    }
+
+</style>
+{% endblock %}

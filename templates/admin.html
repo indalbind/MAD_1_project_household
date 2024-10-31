@@ -1,0 +1,292 @@
+{% extends 'layout.html' %}
+{% block title %}
+    Admin Dashboard
+{% endblock %}
+
+{% block content %}
+    <h1 style="margin-top: 30px;">Admin Dashboard</h1>
+    <div class = "heading">
+        <h2  style="text-align: left; margin-right: 900px;">Services</h2>
+        <a class="btn btn-success" href="{{url_for('add_services')}}">
+            <i class="fas fa-plus fa-xs"></i>
+            Add <!-- change this add word can chage the position of + left or right-->
+        </a>  
+    </div>
+
+
+<table class = "table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Service name</th>
+            <th>Base price</th>
+            <th>Action</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for service in service %}
+        <tr>
+            <td><a href= "{{url_for('show_service', id = service.id)}}" style="text-decoration: none">{{service.id}}</a></td> <!-- remove under line for look better-->
+            <td>{{service.name}}</td>
+            <td>{{service.base_price}} ₹</td>
+
+            <td>
+                <a class = "btn btn-outline-primary" href="{{url_for('edit_service',id = service.id)}}">
+                    <i class = "fas fa-edit fa-xs"></i>
+                    Edit
+                </a>
+
+                <a class = "btn btn-outline-danger" href="{{url_for('delete_service',id = service.id)}}">
+                    <i class="fas fa-trash fa-xs"></i>
+                    Delete
+                </a>   
+
+            </td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+
+<!-- professional part -->
+<br>
+
+<h2 style="text-align: left; ">Professionals</h2>
+<table class = "table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Experience(Yrs)</th>
+            <th>Service_provide</th> <!-- service name mean's koon saa service detaa haiii-->
+            <th>Action</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for professional in professional %}
+        <tr>
+            <td><a href= "{{url_for('show_professional', id = professional.id)}}" style="text-decoration: none">{{professional.id}}</a></td> <!-- remove under line for look better-->
+            <td>{{professional.fullname}}</td>
+            <td>{{professional.experience}}</td>
+            <td>{{professional.service_name}}</td>
+
+            {% if professional.approved %}
+                {% if professional.blocked  %}
+                    <td> 
+                        <a class = "btn btn-outline-success" href="{{url_for('unblock_professional',id = professional.id)}}">
+                            <i class = "fas fa-check fa-xs"></i>
+                            Unblock
+                        </a>
+
+                        <a class = "btn btn-outline-danger" href="{{url_for('delete_professional',id = professional.id)}}">
+                            <i class="fas fa-trash fa-xs"></i>
+                            Delete
+                        </a>
+                    </td>
+
+
+                {% else %}
+                    <td>
+                        <a class = "btn btn-outline-warning" href="{{url_for('reject_professional',id = professional.id)}}">
+                            <i class = "fas fa-ban fa-xs"></i>
+                            Reject
+                        </a>
+        
+        
+                        <a class = "btn btn-outline-danger" href="{{url_for('delete_professional',id = professional.id)}}">
+                            <i class="fas fa-trash fa-xs"></i>
+                            Delete
+                        </a>
+                    </td>
+                {% endif %}
+            {% else %}
+                    <td>
+                        <a class = "btn btn-outline-success" href="{{url_for('approve_professional',id = professional.id)}}">
+                            <i class = "fas fa-check fa-xs"></i>
+                            Approve
+                        </a>
+        
+        
+                        <a class = "btn btn-outline-warning" href="{{url_for('reject_professional',id = professional.id)}}">
+                            <i class = "fas fa-ban fa-xs"></i>
+                            Reject
+                        </a>
+        
+        
+                        <a class = "btn btn-outline-danger" href="{{url_for('delete_professional',id = professional.id)}}">
+                            <i class="fas fa-trash fa-xs"></i>
+                            Delete
+                        </a>                 
+            {% endif %}
+
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+
+
+
+
+<!-- service_request part -->
+<br>
+
+<h2 style="text-align: left; ">Servic Requests</h2>
+<table class = "table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Assigned Professional</th>
+            <th>Requested username</th>
+            <th>Service Name</th>
+            <th>Date of request</th>
+            <th>Status</th> <!-- service name mean's koon saa service detaa haiii-->
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for request in service_request %}
+        <tr>
+            <td>{{request.id}}</td> <!-- remove under line for look better-->
+            <td>{{request.assigned_professional.fullname}}</td> <!-- because you define backref and backref mean's back relation with value as variable name-->
+            <td>{{request.requesting_customer.fullname}}</td> <!-- because you define backref and backref mean's back relation with value as variable name-->
+            <td>{{request.service.name}}</td>
+            <td>{{request.date_of_request}}</td>
+
+            {% if request.status == "False" %}
+                <td style="color: rgb(229, 233, 37);">pending</td>
+            {% elif request.status == "True" %}
+                <td style="color: rgb(14, 177, 17);">Accepted</td>    
+            {% else %}
+                <td style="color: rgb(139, 90, 5);">{{request.status}}</td> 
+            {% endif %} 
+            
+            
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+
+
+
+<!-- user part  -->
+<br>
+
+<h2 style="text-align: left;">Customers</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Fullname</th>
+            <th>Emailid</th>
+            <th>Address</th> <!-- service name mean's koon saa service detaa haiii-->
+            <th>Pincode</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in userall %}
+            {% if not user.is_admin %}  <!-- This will exclude admin users -->
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.fullname }}</td>
+                <td>{{ user.email_id }}</td>
+                <td>{{ user.address }}</td>
+                <td>{{ user.pincode }}</td>
+
+                {% if user.blocked %}
+                <td>
+                    <a class="btn btn-outline-success" href="{{ url_for('unblock_user', id=user.id) }}">
+                        <i class="fas fa-check fa-xs"></i> 
+                        Unblock
+                    </a>
+                    <a class="btn btn-outline-danger" href="{{ url_for('delete_user', id=user.id) }}">
+                        <i class="fas fa-trash fa-xs"></i>
+                         Delete
+                    </a>
+                </td>
+                {% else %}
+                
+                <td>
+                    <a class="btn btn-outline-warning" href="{{ url_for('reject_user', id=user.id) }}">
+                        <i class="fas fa-ban fa-xs"></i>
+                         Reject
+                    </a>
+                    <a class="btn btn-outline-danger" href="{{ url_for('delete_user', id=user.id) }}">
+                        <i class="fas fa-trash fa-xs"></i>
+                         Delete
+                    </a>
+                </td>
+                {% endif %}
+            </tr>
+            {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+
+
+
+
+
+
+
+{% endblock %}   
+
+
+
+
+
+
+
+
+
+{% block style %}
+<style>
+    
+    body {
+        margin: 0;
+        padding: 0;
+        background-image: url('/static/images/admin.jpg'); /* Add background image */
+        background-size: cover; /* Ensure the image covers the entire background */
+        background-repeat: no-repeat; /* Prevent image repetition */
+        background-attachment: fixed;
+    }
+
+
+    .heading{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-top: -25px;
+    }
+
+    h1{
+        text-align: center;
+        color: aliceblue;
+        font-weight: bold;
+    }
+
+    h2{
+        text-align: center;
+        color: rgb(97, 179, 238);    
+    }
+
+
+    /* adding the border radius in table */
+    table {
+        width: 100%;
+        /* border-collapse: separate;  user for make cell*/ 
+        border-radius: 10px; /* Add rounded corners */
+        overflow: hidden; /* Ensures the border-radius works */
+    }
+    
+
+
+
+</style>
+{% endblock %}

@@ -1,0 +1,120 @@
+{% extends 'layout.html' %}
+
+
+
+{% block title %}
+    Service Requests Summary
+{% endblock %}
+
+
+
+
+
+{% block content %}
+
+<h4 style=" text-align: center; margin-top:30px">Summary</h4>
+
+<!-- Canvas element where the chart will be drawn -->
+<div  style="width: 50%; float: right; margin-right: 20px; ">
+    <canvas id="serviceRequestsChart" width="816" height="508" style="display: inline; box-sizing: border-box;height: 258px;width: 516px;margin-top: 150px;padding:0%"></canvas>
+</div>
+
+<!-- Embed the Flask variables as JSON in a hidden script tag -->
+<script id="flask-data" type="application/json">
+    {
+        "serviceIds": {{ service_ids | tojson | safe }},
+        "requestCounts": {{ request_counts | tojson | safe }}
+    }
+</script>
+
+
+
+{% block scripts %}
+<!-- Include the Chart.js library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // Retrieve the Flask data from the hidden script tag
+    const flaskData = JSON.parse(document.getElementById('flask-data').textContent);
+    
+    const serviceIds = flaskData.serviceIds || [];
+    const requestCounts = flaskData.requestCounts || [];
+
+    // Debugging: Check if the data is correct
+    console.log("Service IDs:", serviceIds);
+    console.log("Request Counts:", requestCounts);
+
+    // Setting up the chart
+    const ctx = document.getElementById('serviceRequestsChart').getContext('2d');
+    const serviceRequestsChart = new Chart(ctx, {
+        type: 'bar', // Bar chart
+        data: {
+            labels: serviceIds, // X-axis labels (Service IDs)
+            datasets: [{
+                label: 'Number of Requests',
+                data: requestCounts, // Y-axis values (Request counts)
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.6)', // Greenish change colour if i add any thing 
+                    'rgba(54, 162, 235, 0.6)', // Blue
+                    'rgba(255, 99, 132, 0.6)',  // Red
+                    'rgba(226, 160, 242, 0.6)'
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(226, 160, 242, 0.6)'
+                ],
+
+                borderWidth: 1,
+                barThickness: 30,   // Adjust this value to reduce bar width
+                maxBarThickness: 40 // Optional: Set a max width for bars
+
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true, // Start Y-axis at 0
+                    title: {
+                        display: true,
+                        text: 'Number of Requests'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Service ID'
+                    },
+                    categoryPercentage: 8, // Reduce this value to decrease space between bars
+                    barPercentage: 0.9 // Adjust bar width inside the category
+                }
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Service Requests Summary'
+                }
+            }
+        }
+    });
+</script>
+
+{% endblock %}
+{% endblock %}
+
+
+
+
+{% block style %}
+<style>
+    body{
+        margin: 0;
+        padding: 0;
+        background-image: url('/static/images/summary.png'); /* Add background image */
+        background-size: cover; /* Ensure the image covers the entire background */
+        background-repeat: no-repeat; /* Prevent image repetition */
+        background-attachment: fixed;
+}
+</style>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Professional
+{% endblock %}
+
+{% block content %}
+<h4 style="text-align: center; margin-top: 30px;">Summary</h4>
+
+<div style="width: 50%; float: right; margin-right: 20px;">
+    <canvas id="summaryChart" width="816" height="508" style="display: inline; box-sizing: border-box; height: 258px; width: 516px; margin-top: 150px; padding: 0%;"></canvas>
+</div>
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    var ctx = document.getElementById('summaryChart').getContext('2d');
+    var summaryChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['TotalService', 'Accepted', 'Closed', 'Rejected'],  <!-- Fixed the labels -->
+            datasets: [{
+                label: 'Total Serivce',
+                data: [{{ total_requests }}, {{ received_requests }}, {{ closed_requests }}, {{ rejected_requests }}],  <!-- Ensure values are passed correctly -->
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.6)',  
+                    'rgba(75, 192, 192, 0.6)',  
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(253, 2, 45, 0.6)'   
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 99,132,1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+{% endblock %} 
+{% endblock %}
+
+{% block style %}
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-image: url('/static/images/summary.png');
+        background-size: cover; 
+        background-repeat: no-repeat; 
+        background-attachment: fixed;
+    }
+</style>
+{% endblock %}

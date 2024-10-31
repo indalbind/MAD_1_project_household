@@ -1,0 +1,138 @@
+{% extends 'layout.html' %}
+{% block title %}
+Register
+{% endblock %}
+
+
+
+{% block content %}
+<h1>Professional Signup</h1>
+<div class="form-container">
+    <form method = "post" enctype="multipart/form-data" class ="mt-5">
+        <br>
+        <!-- for username -->
+        <label for = "username" class = "from-label">
+            <input type="text" name = "username" id = "username" class = "form-control line-input" placeholder="Enter your Username" required>
+        </label>
+        <br>
+
+        <!-- for password -->
+        <label for = "password" class = "form-label">
+            <input type="password" name = "password" id = "password" class = "form-control line-input" placeholder="Enter your password" required>
+        </label>
+        <br>
+
+        <!-- for fullname -->
+        <label for="fullname" class = "form-label">
+            <input type="text" name = "fullname" id = "fullname" class = "form-control line-input" placeholder="Enter your FullName" >
+        </label>
+        <br>
+
+        <!-- service name -->
+        <select name="service_name" id="parameter" class = "form-control line-input " aria-placeholder="Select service">
+            <option selected> Select services</option>
+
+            {% for service in services %} 
+            <option value = "{{service.name}}" class="line-input text-primary">{{service.name}} </option>
+            
+            {% endfor %}
+        </select>
+
+         <br>
+
+         <!-- experience -->
+         <label for="experience" class="form-lable">
+            <input type="text" name = "experience" id = "experience" class="form-control line-input" placeholder="Enter your experience in yrs">
+         </label>
+         <br>
+
+         <!-- pdf file -->
+         <label for="pdf_file" class="form-label">
+           <span class="text-muted"> Upload your resume (PDF): </span>
+            <input type="file" name="pdf_file" id="pdf_file" class="form-control line-input" accept="application/pdf" required style="color: #4a90e2; border-color: #4a90e2">
+          </label>
+          <br>
+
+
+        <!-- for address -->
+        <label for="address" class = "form-label">
+            <textarea name="address" id="address" class="form-control line-input" placeholder="Enter your Address" style="height: 2px"></textarea>
+        </label>
+        <br>
+
+        <!-- for pinconde -->
+        <label for="pincode" class = "form-label">
+            <input type="text" name = "pincode" id = "pincode" class = "form-control line-input" placeholder="Enter your Pincoce in integer" >
+        </label>
+        <br>
+        <br>
+        <input type="submit" value="Register" class = "btn btn-success">
+
+    </form>
+</div>
+
+<img src="/static/images/mechanic.png" alt="user_icon" height = "80" width = "80" class="user_icon">
+{% endblock %}
+
+
+
+{% block style %}
+<style>
+    body{
+        background-color: rgb(172, 200, 216);
+        margin: 0;
+        padding: 0;
+        background-size: cover; /* Ensure the image covers the entire background */
+        background-repeat: no-repeat; /* Prevent image repetition */
+        height: 100vh;
+        background-attachment: fixed;
+    }
+
+        /* Center the form vertically and horizontally */
+    .form-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh; /* Full viewport height */
+        margin: -40px;
+            
+    }
+    
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 500px;
+        padding: 20px;
+        margin: 100px; /* dont fiexed the height of form adjest by using the margin and padding */
+        background-color: #f1f6f7;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+        .line-input {
+            border: none;
+            border-bottom: 1px solid #000; /* Black bottom border to create line */
+            outline: none; /* Remove the blue outline when input is focused */
+            width: 400px;
+            padding: 5px 0; /* Padding for spacing */
+            background-color: transparent;
+        }
+    
+    h1{
+        margin-top: 60px;
+        text-align : center
+    
+    }
+    .user_icon{
+        position: absolute;
+        top: 99px; /* Adjust as needed */
+        right: 340px; /* Adjust as needed */
+        z-index: 999; /* Ensure it's on top */
+        background-attachment: fixed;
+    }
+
+
+</style>
+
+{% endblock %}
