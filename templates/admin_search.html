@@ -11,11 +11,11 @@
     <form method="GET">  <!-- Using GET method to send parameters in URL -->
         <h3>Search by:</h3>
         <select name="parameter" id="parameter" class="form-select text-success">
-            <option value="service_request" selected>Service Request</option>
+            <option value="service_request" selected>Service Request_status</option>
             <option value="user"selected>Customer</option>
             <option value="professional" selected>Professional</option>
             <option value="service" selected>Service</option>
-            <option value="review" selected>Review</option>
+            <option value="review" selected>Review_comment</option>
         </select>
 
         <input type="text" class="form-control text-success" id="query" name="query" placeholder="Search Query" value="{{ request.args.get('query', '') }}">

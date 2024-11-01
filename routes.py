@@ -591,11 +591,11 @@ def search():
     headers = []
 
     if user.is_admin:
-        if parameter == 'service_request' and query:
+        if parameter == 'service_request' and query != 'False':
             service_requests = ServiceRequest.query.filter(ServiceRequest.status.ilike('%'+ query +'%')).all()
             headers = ['Request ID', 'Service Name', 'Customer Name', 'Professional Name', 'Date of Request', 'Date of Completion', 'Status', 'Remarks']
             for sr in service_requests:
-                results = [
+                results.append(
                     {
                         'Request ID': sr.id,
                         'Service Name': sr.service.name,
@@ -606,13 +606,13 @@ def search():
                         'Status': sr.status,
                         'Remarks': sr.remarks
                     } 
-                ]
+                )
 
         elif parameter == 'user' and query:
             users = User.query.filter(User.fullname.ilike('%'+ query +'%')).all()
             headers = ['User ID', 'Username', 'Full Name', 'Email', 'Address', 'Pincode', 'Block_Status']
             for u in users:
-                results = [
+                results.append(
                     {
                         'User ID': u.id,
                         'Username': u.username,
@@ -622,12 +622,12 @@ def search():
                         'Pincode': u.pincode,
                         'Block_Status': u.blocked
                     } 
-                ]
+                )
         elif parameter == 'professional' and query:
             professionals = Professional.query.filter(Professional.fullname.ilike('%'+ query +'%')).all()
             headers = ['Professional ID', 'Username', 'Full Name', 'Service Name', 'Experience', 'Address', 'Pincode']
             for p in professionals:
-                results = [
+                results.append(
                     {
                         'Professional ID': p.id,
                         'Username': p.username,
@@ -639,24 +639,24 @@ def search():
                         'Approved': p.approved,
                         'Blocked': p.blocked
                     } 
-                ]
+                )
         elif parameter == 'service' and query:
             services = Service.query.filter(Service.name.ilike('%'+ query +'%')).all()
             headers = ['Service ID', 'Name', 'Description', 'Base Price']
             for s in services:
-                results = [
+                results.append(
                     {
                         'Service ID': s.id,
                         'Name': s.name,
                         'Description': s.description,
                         'Base Price': s.base_price
                     } 
-                ]
+                )
         elif parameter == 'review' and query:
             reviews = Review.query.filter(Review.comment.ilike('%'+ query +'%')).all()
             headers = ['Review ID', 'Service Request ID', 'Customer ID', 'Professional ID', 'Rating', 'Comment']
             for r in reviews:
-                results = [
+                results.append(
                     {
                         'Review ID': r.id,
                         'Service Request ID': r.service_request_id,
@@ -665,7 +665,7 @@ def search():
                         'Rating': r.rating,
                         'Comment': r.comment
                     } 
-                ] 
+                ) 
 
         return render_template('admin_search.html', user=user, results=results, headers=headers, parameter=parameter)
     else:
