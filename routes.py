@@ -625,7 +625,7 @@ def search():
                 ]
         elif parameter == 'professional' and query:
             professionals = Professional.query.filter(Professional.fullname.ilike('%'+ query +'%')).all()
-            headers = ['Professional ID', 'Username', 'Full Name', 'Service Name', 'Experience', 'Address', 'Pincode', 'Approved', 'Blocked']
+            headers = ['Professional ID', 'Username', 'Full Name', 'Service Name', 'Experience', 'Address', 'Pincode']
             for p in professionals:
                 results = [
                     {

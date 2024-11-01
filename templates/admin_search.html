@@ -27,7 +27,83 @@
 </div>
 
 
-{% if results %}
+{% if results and request.args.get('query') %}
+    {%if parameter == 'professional' %}
+    <div class="mt-5">
+        <h4>Search Results:</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    {% for header in headers %}
+                    <th>{{ header }}</th>
+                    {% endfor %}
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                <tr>
+                    {% for header in headers %}
+                    <td>{{ result[header] }}</td>
+                    {% endfor %}
+                    {% if result['Approved'] %}
+                        {% if result['Blocked']  %}
+                    <td> 
+                        <a class = "btn btn-outline-success" href="{{url_for('unblock_professional',id = result['Professional ID'] )}}">
+                            <i class = "fas fa-check fa-xs"></i>
+                            Unblock
+                        </a>
+
+                        <a class = "btn btn-outline-danger" href="{{url_for('delete_professional',id = result['Professional ID'] )}}">
+                            <i class="fas fa-trash fa-xs"></i>
+                            Delete
+                        </a>
+                    </td>
+                    
+
+
+                {% else %}
+                    <td>
+                        <a class = "btn btn-outline-warning" href="{{url_for('reject_professional',id = result['Professional ID'] )}}">
+                            <i class = "fas fa-ban fa-xs"></i>
+                            Reject
+                        </a>
+        
+        
+                        <a class = "btn btn-outline-danger" href="{{url_for('delete_professional',id = result['Professional ID'] )}}">
+                            <i class="fas fa-trash fa-xs"></i>
+                            Delete
+                        </a>
+                    </td>
+                {% endif %}
+                {% else %}
+                    <td>
+                        <a class = "btn btn-outline-success" href="{{url_for('approve_professional',id = result['Professional ID'] )}}">
+                            <i class = "fas fa-check fa-xs"></i>
+                            Approve
+                        </a>
+        
+        
+                        <a class = "btn btn-outline-warning" href="{{url_for('reject_professional',id = result['Professional ID'] )}}">
+                            <i class = "fas fa-ban fa-xs"></i>
+                            Reject
+                        </a>
+        
+        
+                        <a class = "btn btn-outline-danger" href="{{url_for('delete_professional',id = result['Professional ID'] )}}">
+                            <i class="fas fa-trash fa-xs"></i>
+                            Delete
+                        </a>
+                    </td>
+                    {% endif %}                 
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>    
+
+
+{% else %}
 <div class="mt-5">
     <h4>Search Results:</h4>
     <table class="table">
@@ -50,7 +126,7 @@
     </table>
 </div>    
 {% endif %}
-
+{% endif %}
 {% endblock %}
 
 
