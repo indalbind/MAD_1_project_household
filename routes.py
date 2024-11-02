@@ -372,51 +372,6 @@ def show_service(id):
     return render_template('service/show.html',user = User.query.get(session['user_id']), service = Service.query.get(id))
 
 
-# dummy route in show product 
-@app.route('/service/<int:service_id>/add-product')
-@admin_required
-def add_product(service_id):
-    return render_template('product/add.html',user = User.query.get(session['user_id']), service = Service.query.get(service_id))
-
-@app.route('/service/<int:service_id>/add-product',methods = ['POST'])
-@admin_required
-def add_product_post(service_id):
-    pass
-
-# editing the showing product where we able to do edit and delete 
-@app.route('/product/<int:id>/edit')
-@admin_required
-def edit_product(id):
-    return render_template('product/edit.html',user = User.query.get(session['user_id']), service = Service.query.get(id)) # 👈👈👈👈
-
-@app.route('/product/<int:id>/edit', methods = ['POST'])
-@admin_required
-def edit_product_post(id):
-    pass
-
-# delete that showing product 
-@app.route('/product/<int:id>/delete')
-@admin_required
-def delete_product(id):
-    services = Service.query.get(id)
-    if not services:
-        flash('service not exist')
-        redirect(url_for('admin'))
-    return render_template('product/delete.html',user = User.query.get(session['user_id']), service = services) # 👈👈👈👈
-
-@app.route('/product/<int:id>/delete', methods = ['POST'])
-@admin_required
-def delete_product_post(id):
-    services = Service.query.get(id)
-    if not services:
-        flash('service not exist')
-        redirect(url_for('admin'))
-    db.session.delete(services)    
-    db.session.commit()
-    flash("service deleted sucss fully")
-    return redirect(url_for('admin'))
-
-
 
 
 # ------------------------------------------------------------

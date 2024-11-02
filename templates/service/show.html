@@ -8,15 +8,12 @@
     <div class = "heading">
         <h2 class = "text-muted" style="text-align: left;">Service</h2>
         <h3 class="text-muted">
-            <em>
+            <em style="margin-left: 0px;margin-right: 150px;">
                 Showing service of {{service.name}} only.
             </em>
         </h3>
 
-        <a class="btn btn-success" href="{{url_for('add_product', service_id = service.id)}}">
-            <i class="fas fa-plus fa-xs"></i>
-            Add <!-- change this add word can chage the position of + left or right-->
-        </a> 
+ 
     </div>
 
 
@@ -29,7 +26,6 @@
             <th>date_of_request</th>
             <th>date_of_completion</th>
             <th>status</th>
-            <th>remarks</th>
 
         </tr>
     </thead>
@@ -41,16 +37,22 @@
             <td>{{product.professional_id}}</td>
             <td>{{product.date_of_request}}</td>
             <td>{{product.date_of_completion}}</td>
-            <td>{{product.status}}</td>
+            {% if product.status == "False" %}
+                <td style="color: rgb(229, 233, 37);">pending</td>
+            {% elif product.status == "True" %}
+                <td style="color: rgb(14, 177, 17);">Accepted</td>    
+            {% else %}
+                <td style="color: rgb(139, 90, 5);">{{product.status}}</td> 
+            {% endif %}
             <td>{{product.remarks}}</td>
 
             <td>
-                <a class = "btn btn-outline-primary" href="{{url_for('edit_product',id = product.id)}}">
+                <a class = "btn btn-outline-primary" href="{{url_for('edit_service',id = service.id)}}">
                     <i class = "fas fa-edit fa-xs"></i>
                     Edit
                 </a>
 
-                <a class = "btn btn-outline-danger" href="{{url_for('delete_product',id = product.id)}}">
+                <a class = "btn btn-outline-danger" href="{{url_for('delete_service',id = service.id)}}">
                     <i class="fas fa-trash fa-xs"></i>
                     Delete
                 </a>   
