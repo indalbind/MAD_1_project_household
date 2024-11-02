@@ -648,7 +648,7 @@ def search():
                         'Service ID': s.id,
                         'Name': s.name,
                         'Description': s.description,
-                        'Base Price': s.base_price
+                        'Base Price': str(s.base_price)+' ₹'
                     } 
                 )
         elif parameter == 'review' and query:
