@@ -593,7 +593,7 @@ def search():
     if user.is_admin:
         if parameter == 'service_request' and query != 'False':
             service_requests = ServiceRequest.query.filter(ServiceRequest.status.ilike('%'+ query +'%')).all()
-            headers = ['Request ID', 'Service Name', 'Customer Name', 'Professional Name', 'Date of Request', 'Date of Completion', 'Status', 'Remarks']
+            headers = ['Request ID', 'Service Name', 'Customer Name', 'Professional Name', 'Date of Request', 'Date of Completion', 'Status']
             for sr in service_requests:
                 results.append(
                     {
@@ -603,8 +603,7 @@ def search():
                         'Professional Name': sr.assigned_professional.fullname,
                         'Date of Request': sr.date_of_request,
                         'Date of Completion': sr.date_of_completion,
-                        'Status': sr.status,
-                        'Remarks': sr.remarks
+                        'Status': sr.status
                     } 
                 )
 

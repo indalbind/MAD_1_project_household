@@ -83,7 +83,6 @@ class ServiceRequest(db.Model):
     date_of_request = db.Column(db.Date, nullable=False, default=date.today) 
     date_of_completion = db.Column(db.Date) 
     status = db.Column(db.String(30), nullable=False,default = "False")  # e.g., 'Pending', 'Completed', 'Cancelled'
-    remarks = db.Column(db.String(200))
     rejected_by_professional_id = db.Column(db.String(255), nullable=True) # Update to store a comma-separated list of rejecting professionals
 
     # Relationships
