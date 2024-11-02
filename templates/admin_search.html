@@ -44,8 +44,17 @@
                 {% for result in results %}
                 <tr>
                     {% for header in headers %}
-                    <td>{{ result[header] }}</td>
+                    <td>
+                        {% if header == 'Professional ID' %}
+                            <a href="{{ url_for('show_professional', id=result['Professional ID']) }}" style="text-decoration: none">
+                                {{ result[header] }}
+                            </a>
+                            {% else %}
+                                {{ result[header] }}
+                            {% endif %}
+                    </td>
                     {% endfor %}
+                    
                     {% if result['Approved'] %}
                         {% if result['Blocked']  %}
                     <td> 
