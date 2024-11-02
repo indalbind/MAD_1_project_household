@@ -87,7 +87,7 @@ class ServiceRequest(db.Model):
     rejected_by_professional_id = db.Column(db.String(255), nullable=True) # Update to store a comma-separated list of rejecting professionals
 
     # Relationships
-    reviews = db.relationship('Review', backref='service_request', lazy=True)
+    reviews = db.relationship('Review', backref='service_request', lazy=True,cascade="all, delete-orphan")
 
     
     def add_rejecting_professional(self, professional_id):
